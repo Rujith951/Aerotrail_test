@@ -13,14 +13,46 @@ import Button from "../Button/Button";
 import { staticBlocks } from "../../utils/staticBlocks";
 
 import "./flowEditor.scss";
+import PopupMenu from "../PopupMenu/PopupMenu";
 
 const FlowEditor = () => {
 	const [nodes, setNodes, onNodesChange] = useNodesState([]);
 	const [edges, setEdges, onEdgesChange] = useEdgesState([]);
 	const [sidebarBlocks, setSidebarBlocks] = useState(staticBlocks);
+	const [popupMenu, setPopupMenu] = useState({
+		visible: false,
+		x: 0,
+		y: 0,
+		title: "",
+	});
 
 	const [undoStack, setUndoStack] = useState([]);
 	const [redoStack, setRedoStack] = useState([]);
+
+	console.log(undoStack, "undo");
+	console.log(redoStack, "redo");
+
+	const handleRightClickNode = (event, node) => {
+		event.preventDefault();
+
+		const canvasRect = document
+			.querySelector(".react-flow__viewport")
+			.getBoundingClientRect();
+
+		const popupX = node.position.x + 100;
+		const popupY = node.position.y + 60;
+
+		setPopupMenu({
+			visible: true,
+			x: popupX,
+			y: popupY,
+			title: `Hello from ${node.data.label}`,
+		});
+	};
+
+	const handleCanvasClick = () => {
+		setPopupMenu({ visible: false, x: 0, y: 0, title: "" });
+	};
 
 	const saveStateToUndoStack = () => {
 		setUndoStack(prev => [...prev, { nodes, edges }]);
@@ -32,6 +64,9 @@ const FlowEditor = () => {
 		if (undoStack.length === 0) return;
 
 		const prevState = undoStack[undoStack.length - 1];
+
+		console.log(prevState, "pre");
+
 		setUndoStack(prev => prev.slice(0, -1));
 		setRedoStack(prev => [...prev, { nodes, edges }]);
 
@@ -104,6 +139,8 @@ const FlowEditor = () => {
 			const source = params.source;
 			const target = params.target;
 
+			console.log(source, target, "st");
+
 			const isForward = parseInt(source, 10) < parseInt(target, 10);
 
 			if (isForward) {
@@ -167,6 +204,15 @@ const FlowEditor = () => {
 				onDrop={onDrop}
 				onDragOver={onDragOver}
 				onConnect={onConnect}
+				handleRightClickNode={handleRightClickNode}
+				onCanvasClick={handleCanvasClick}
+			/>
+
+			<PopupMenu
+				x={popupMenu.x}
+				y={popupMenu.y}
+				visible={popupMenu.visible}
+				title={popupMenu.title}
 			/>
 		</div>
 	);

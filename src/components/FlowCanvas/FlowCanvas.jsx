@@ -9,13 +9,9 @@ const FlowCanvas = ({
 	onConnect,
 	onDrop,
 	onDragOver,
+	handleRightClickNode,
+	onCanvasClick,
 }) => {
-	const handleRightClickNode = (event, node) => {
-		event.preventDefault();
-
-		alert(`Hello World from node ${node.id}`);
-	};
-
 	return (
 		<ReactFlow
 			nodes={nodes}
@@ -26,6 +22,7 @@ const FlowCanvas = ({
 			onDrop={onDrop}
 			onDragOver={onDragOver}
 			onNodeContextMenu={handleRightClickNode}
+			onClick={onCanvasClick}
 		>
 			<Background />
 			<Controls />
