@@ -1,70 +1,47 @@
-# Getting Started with Create React App
+### Installation Steps
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Clone the repository:
 
-## Available Scripts
+Install dependencies:
+npm install of npm i
 
-In the project directory, you can run:
+Start the development server:
+npm start
 
-### `npm start`
+Open in browser:
+Navigate to http://localhost:3000
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+### Summary of your solution
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+A fixed set of draggable predefined blocks (A–O).
 
-### `npm test`
+Drag-and-drop canvas interaction.
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+Custom connect rules (only forward connections are allowed).
 
-### `npm run build`
+Visual feedback for invalid connections (temporary red edge).
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+Undo/Redo support for:
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+Adding nodes, Connecting nodes, Removing blocks
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+### Notes on design decisions
 
-### `npm run eject`
+nstead of dynamically adding blocks (A–Z), we use a staticBlocks array of 15 fixed blocks with id, label, and type.
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+Ensures predictable ordering and prevents duplicates.
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+2. Undo/Redo History
+   Implemented using two stacks: undoStack and redoStack.
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+We push the current state (nodes, edges) to the undo stack before making changes.
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+Redo stack is cleared upon new edits (common design pattern).
 
-## Learn More
+3. Edge Validation Logic
+   Edge connections are only allowed if the source ID is numerically less than the target ID.
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+IDs are compared using parseInt() instead of charCodeAt() to support numeric ids ("1", "2", etc).
 
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+4. UI Simplicity
+   There will be a sidebar for storing blocks, and Undo/Redo buttons will be placed at the bottom of the sidebar on the right side of the UI.

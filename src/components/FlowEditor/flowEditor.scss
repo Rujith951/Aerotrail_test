@@ -1,0 +1,13 @@
+.flowEditor {
+	width: 100vw;
+	height: 100vh;
+
+	&UndoRedo {
+		display: flex;
+		gap: 20px;
+		position: absolute;
+		bottom: 10vh;
+		right: 7vh;
+		z-index: 100;
+	}
+}
