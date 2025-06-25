@@ -1,14 +1,17 @@
 ### Installation Steps
 
-Clone the repository:
+Clone the repository: https://github.com/Rujith951/Aerotrail_test.git
 
 Install dependencies:
+
 npm install of npm i
 
 Start the development server:
+
 npm start
 
 Open in browser:
+
 Navigate to http://localhost:3000
 
 ### Summary of your solution
