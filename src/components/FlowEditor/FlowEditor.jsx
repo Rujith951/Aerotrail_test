@@ -70,6 +70,11 @@ const FlowEditor = () => {
 		setUndoStack(prev => prev.slice(0, -1));
 		setRedoStack(prev => [...prev, { nodes, edges }]);
 
+		const nodeIds = prevState.nodes.map(n => n.id);
+		if (!nodeIds.includes(popupMenu.title.split(" ").at(-1))) {
+			setPopupMenu({ visible: false, x: 0, y: 0, title: "" });
+		}
+
 		setNodes(prevState.nodes);
 		setEdges(prevState.edges);
 	};
