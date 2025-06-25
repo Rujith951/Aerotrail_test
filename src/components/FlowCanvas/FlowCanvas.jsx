@@ -26,7 +26,6 @@ const FlowCanvas = ({
 			onDrop={onDrop}
 			onDragOver={onDragOver}
 			onNodeContextMenu={handleRightClickNode}
-			fitView
 		>
 			<Background />
 			<Controls />

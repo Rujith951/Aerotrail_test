@@ -42,9 +42,11 @@ We push the current state (nodes, edges) to the undo stack before making changes
 Redo stack is cleared upon new edits (common design pattern).
 
 3. Edge Validation Logic
+
    Edge connections are only allowed if the source ID is numerically less than the target ID.
 
-IDs are compared using parseInt() instead of charCodeAt() to support numeric ids ("1", "2", etc).
+   IDs are compared using parseInt() instead of charCodeAt() to support numeric ids ("1", "2", etc).
 
 4. UI Simplicity
+
    There will be a sidebar for storing blocks, and Undo/Redo buttons will be placed at the bottom of the sidebar on the right side of the UI.
